@@ -134,8 +134,17 @@ ghostdriver.Session = function(desiredCapabilities) {
                 proxySettings["ip"] = urlParts[0];
                 proxySettings["port"] = urlParts[1];
                 proxySettings["proxyType"] = "http";
-                proxySettings["user"] = "";
-                proxySettings["password"] = "";
+
+                var auth = proxyCapability["auth"]
+                var authParts = auth && auth.split(':')
+                if (authParts && authParts.length === 2) {
+                  proxySettings["user"] = authParts[0]
+                  proxySettings["password"] = authParts[1]
+                }
+                else {
+                  proxySettings["user"] = "";
+                  proxySettings["password"] = "";
+                }
 
                 return proxySettings;
             }
